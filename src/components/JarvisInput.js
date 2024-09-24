@@ -53,11 +53,13 @@ const JarvisInput = () => {
 
       const formData = new FormData();
       const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
-      formData.append('audio', audioBlob, 'audio-recording.webm'); // Send audio file to the backend
 
-      console.log('Sending WebM audio to backend for transcription...');
+      // Append the audio as a .wav file
+      formData.append('audio', audioBlob, 'audio-recording.wav');
 
-      // Send WebM audio to the transcribe endpoint
+      console.log('Sending .wav audio to backend for transcription...');
+
+      // Send .wav audio to the transcribe endpoint
       const transcribeResponse = await axios.post('http://localhost:5000/transcribe', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -102,7 +104,7 @@ const JarvisInput = () => {
       </div>
 
       {/* Step 4: Render MicWave when recording */}
-      {micWaveVisible && <MicWave />}
+      {micWaveVisible && <MicWave isRecording={micWaveVisible} />}
 
       {/* Step 2: Render AudioWave when the AI response is playing */}
       {isAudioPlaying && <AudioWave audioUrl={audioResponseUrl} onEnded={handleAudioEnd} />}
@@ -169,3 +171,4 @@ const JarvisInput = () => {
 };
 
 export default JarvisInput;
+
