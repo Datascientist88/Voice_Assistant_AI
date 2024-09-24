@@ -1,0 +1,12 @@
+langchain
+langchain_community
+langchain_core
+langchain_openai
+python-dotenv
+flask
+flask_cors
+tiktoken
+qdrant-client
+openai
+uuid
+elevenlabs
