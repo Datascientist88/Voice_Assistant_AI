@@ -21,7 +21,8 @@ import logging
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for cross-origin requests
+# Allow CORS requests from frontend (localhost:3000)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Initialize logging for debugging
 logging.basicConfig(level=logging.DEBUG)
@@ -74,22 +75,21 @@ def get_conversational_rag_chain(retriever_chain):
     return create_retrieval_chain(retriever_chain, stuff_documents_chain)
 
 # Transcribe audio using OpenAI Whisper
-def transcribe_audio(client, audio_path):
-    logging.debug(f"Transcribing audio from path: {audio_path}")
+def speech_to_text(audio_data_path):
     try:
-        with open(audio_path, "rb") as audio_file:
-            # Use OpenAI's Whisper model to transcribe
-            transcript = client.audio.transcriptions.create(
-                model="whisper-1", file=audio_file
+        with open(audio_data_path, "rb") as audio_file:
+            transcript = openai_client.audio.transcriptions.create(
+                model="whisper-1", file=audio_file 
             )
+        logging.debug(f"Transcription response: {transcript}")
 
-        # Check if 'text' key exists
-        if 'text' in transcript:
-            logging.debug(f"Transcription result: {transcript['text']}")
-            return transcript['text']
+        # Check for correct response structure
+        if hasattr(transcript, 'text'):
+            return {"text": transcript.text}  # Direct attribute access
+        elif isinstance(transcript, dict) and "text" in transcript:
+            return {"text": transcript["text"]}
         else:
-            logging.error("Transcription response is missing 'text' key")
-            raise ValueError("Transcription response is missing 'text' key")
+            raise ValueError("Unexpected response structure")
     except Exception as e:
         logging.error(f"Error during transcription: {e}")
         raise ValueError(f"Failed to transcribe audio: {e}")
@@ -123,31 +123,28 @@ def text_to_speech_file(text: str) -> str:
         logging.error(f"Error during text-to-speech conversion: {e}")
         raise ValueError(f"Failed to generate speech audio: {e}")
 
-# Transcription endpoint for audio files
-@app.route('/transcribe', methods=['POST'])
+# Transcription Endpoint for Audio Files
+@app.route("/transcribe", methods=["POST"])
 def transcribe():
+    if "audio" not in request.files:
+        return jsonify({"error": "No audio file provided"}), 400
+
+    audio_file = request.files["audio"]
+    supported_formats = ['flac', 'm4a', 'mp3', 'mp4', 'mpeg', 'mpga', 'oga', 'ogg', 'wav', 'webm']
+    file_extension = audio_file.filename.split('.')[-1].lower()
+    if file_extension not in supported_formats:
+        return jsonify({"error": f"Unsupported file format: {file_extension}. Supported formats: {supported_formats}"}), 400
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=f".{file_extension}") as temp_audio:
+        audio_file.save(temp_audio.name)
+        temp_audio_path = temp_audio.name
+
     try:
-        # Check if 'audio' is in the request.files
-        if 'audio' not in request.files:
-            logging.error("No audio file provided")
-            return jsonify({'error': 'No audio file provided'}), 400
+        transcript_result = speech_to_text(temp_audio_path)
+    finally:
+        os.remove(temp_audio_path)
 
-        # Get the audio file from the request
-        audio_file = request.files['audio']
-        temp_audio_path = os.path.join(tempfile.gettempdir(), audio_file.filename)
-
-        # Save audio file
-        audio_file.save(temp_audio_path)
-        logging.debug(f"Audio file saved to: {temp_audio_path}")
-
-        # Transcribe the audio
-        transcribed_text = transcribe_audio(openai_client, temp_audio_path)
-
-        # Return the transcription
-        return jsonify({'transcription': transcribed_text}), 200
-    except Exception as e:
-        logging.error(f"Error during transcription: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+    return jsonify({"transcript": transcript_result.get("text", "")})
 
 # Generate response from text or transcribed audio
 @app.route('/generate', methods=['POST'])
@@ -162,7 +159,7 @@ def generate():
             logging.debug(f"Audio file saved at: {audio_path}")
             
             # Transcribe the audio
-            user_input = transcribe_audio(openai_client, audio_path)
+            user_input = speech_to_text(audio_path)["text"]
         else:
             logging.debug("Received text input")
             user_input = request.json.get('input')
@@ -204,5 +201,6 @@ def serve_audio(filename):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 

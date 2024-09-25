@@ -48,7 +48,7 @@ input {
   border: 1px solid rgba(255, 255, 255, 0.2);  /* Light border for input field */
 }
 
-button {
+button, #recorder {
   background: rgba(255, 255, 255, 0.1);  /* Glassy background for button */
   border: none;
   color: white;  /* Ensure icons are white by default */
@@ -66,21 +66,18 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.2);  /* Light border for button */
   transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;  /* Smooth transition for hover effects */
 }
-.input-container button {
-  position: relative;
-  z-index: 2; /* Ensure icons are above other elements */
-}
-button svg {
-  font-size: 1.5rem;  /* Set icon size explicitly */
-  
+
+button svg, #recorder img {
+  width: 24px;  /* Set a uniform size for both the mic and send icons */
+  height: 24px; /* Match the height and width */
 }
 
-button:hover {
+button:hover, #recorder:hover {
   background-color: cyan;  /* Change background to cyan on hover */
   color: black;  /* Change icon color to black on hover */
 }
 
-button:active {
+button:active, #recorder:active {
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.2);  /* Pressed effect */
 }
 
@@ -98,13 +95,15 @@ button:active {
     padding: 8px; /* Adjust padding inside input */
   }
 
-  button {
+  button, #recorder {
     width: 40px;  /* Reduce button size for tablets */
     height: 40px;  /* Ensure button stays a perfect circle */
   }
 
-  button svg {
+  button svg, #recorder img {
     font-size: 1.2rem; /* Adjust icon size for tablets */
+    width: 20px; /* Adjust icon size for tablets */
+    height: 20px;
   }
 }
 
@@ -121,13 +120,18 @@ button:active {
     padding: 6px; /* Adjust padding inside input */
   }
 
-  button {
+  button, #recorder {
     width: 35px;  /* Further reduce button size for mobile */
     height: 35px;  /* Ensure button stays a perfect circle */
   }
 
-  button svg {
+  button svg, #recorder img {
     font-size: 1rem;  /* Further reduce icon size for mobile */
+    width: 18px; /* Adjust icon size for mobile */
+    height: 18px;
   }
 }
+
+
+
 
