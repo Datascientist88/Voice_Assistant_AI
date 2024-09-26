@@ -57,9 +57,9 @@ const MicRecorder = ({ handleTranscribeAudio, setMicWaveVisible, isProcessing })
       onClick={isRecording ? stopRecording : startRecording}
     >
       {isRecording ? (
-        <IoMdSend style={{ fontSize: "1.5rem", color: "white" }} /> // Show send icon during recording
+        <IoMdSend style={{ fontSize: "1.5rem" }} /> // Show send icon during recording
       ) : (
-        <FaMicrophone style={{ fontSize: "1.5rem", color: "white" }} /> // Show mic icon initially
+        <FaMicrophone style={{ fontSize: "1.5rem" }} /> // Show mic icon initially
       )}
     </div>
   );
