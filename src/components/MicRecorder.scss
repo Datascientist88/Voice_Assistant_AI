@@ -1,7 +1,7 @@
 $recorder-color: #38383d;
 $border-color: #f9f9fa33;
 $background: #2a2a2e;
-$size: 10px; // Same as the Send button size
+$size: 50px;
 
 .mic-recorder {
   position: relative;
@@ -11,23 +11,32 @@ $size: 10px; // Same as the Send button size
   background: $recorder-color;
   border: 1px solid $border-color;
   cursor: pointer;
-  margin-left: 10px; // To match the send button margin
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
   transition: 0.2s ease;
 
+  &.disabled {
+    background-color: cyan;
+    cursor: not-allowed;
+
+    #record {
+      filter: brightness(0.3);
+    }
+  }
+
   #record {
     width: 60%;
     height: 60%;
     transition: inherit;
-    filter: brightness(1); // Default state of the icon (white)
+    filter: brightness(1);
   }
 
-  &:hover {
+  &:hover:not(.disabled) {
     #record {
-      filter: brightness(0); // Turns the mic icon black on hover
+      filter: brightness(0);
     }
   }
 
@@ -40,13 +49,14 @@ $size: 10px; // Same as the Send button size
 }
 
 @keyframes recording {
-  from,
-  to {
+  from, to {
     transform: rotate(10deg);
   }
   50% {
     transform: rotate(-10deg);
   }
 }
+
+
 
 

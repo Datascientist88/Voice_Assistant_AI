@@ -4,7 +4,7 @@ import CustomOrb from "./CustomOrb";
 import Orb from "./Orb";
 import AudioWave from "./AudioWave";
 import MicWave from "./MicWave";
-import MicRecorder from "./MicRecorder"; // Import the new MicRecorder component
+import MicRecorder from "./MicRecorder";
 import axios from "axios";
 import "./JarvisInput.css";
 
@@ -25,7 +25,7 @@ const JarvisInput = () => {
   const handleGenerateResponse = async (text) => {
     try {
       setIsProcessing(true);
-      setIsCustomOrbVisible(false); // Show processing Orb
+      setIsCustomOrbVisible(false);
 
       const response = await axios.post("http://localhost:5000/generate", {
         input: text,
@@ -47,12 +47,11 @@ const JarvisInput = () => {
   const handleTranscribeAudio = async (audioBlob) => {
     try {
       setIsProcessing(true);
-      setIsCustomOrbVisible(false); // Show processing Orb
+      setIsCustomOrbVisible(false);
 
       const formData = new FormData();
-      formData.append("audio", audioBlob, "audio-recording.wav"); // Append audio as a .wav file
+      formData.append("audio", audioBlob, "audio-recording.wav");
 
-      console.log("Sending audio to backend for transcription...");
       const transcribeResponse = await axios.post(
         "http://localhost:5000/transcribe",
         formData,
@@ -64,7 +63,7 @@ const JarvisInput = () => {
       );
 
       const transcribedText = transcribeResponse.data.transcript;
-      await handleGenerateResponse(transcribedText); // Generate response based on transcribed text
+      await handleGenerateResponse(transcribedText);
     } catch (error) {
       console.error("Error transcribing audio:", error);
       alert("Failed to transcribe audio.");
@@ -93,15 +92,11 @@ const JarvisInput = () => {
 
   return (
     <div className="container">
-      {/* Toggle between CustomOrb and processing Orb */}
       <div className="orb-container">
         {isProcessing ? <Orb /> : isCustomOrbVisible ? <CustomOrb /> : null}
       </div>
 
-      {/* Render MicWave when recording */}
       {micWaveVisible && <MicWave isRecording={micWaveVisible} />}
-
-      {/* Render AudioWave when AI response is playing */}
       {isAudioPlaying && (
         <AudioWave audioUrl={audioResponseUrl} onEnded={handleAudioEnd} />
       )}
@@ -114,7 +109,7 @@ const JarvisInput = () => {
           placeholder="type here..."
           value={inputValue}
           onChange={handleInputChange}
-          disabled={isProcessing}
+          disabled={isProcessing || isAudioPlaying}
         />
 
         {/* Toggle between MicRecorder and Send button */}
@@ -122,14 +117,15 @@ const JarvisInput = () => {
           <MicRecorder
             handleTranscribeAudio={handleTranscribeAudio}
             setMicWaveVisible={setMicWaveVisible}
+            isProcessing={isProcessing || isAudioPlaying}
           />
         ) : (
           <button
             onClick={async () => {
               await handleGenerateResponse(inputValue);
-              setInputValue(""); // Clear the input field after sending
+              setInputValue(""); // Clear input after sending
             }}
-            disabled={isProcessing}
+            disabled={isProcessing || isAudioPlaying}
           >
             <IoMdSend />
           </button>
@@ -140,6 +136,7 @@ const JarvisInput = () => {
 };
 
 export default JarvisInput;
+
 
 
 

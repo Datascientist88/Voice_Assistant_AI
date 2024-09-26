@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { IoMdSend } from "react-icons/io";
+import { FaMicrophone } from "react-icons/fa"; // Import mic icon
 import "./MicRecorder.scss";
 
 const recordAudio = () =>
@@ -25,12 +27,12 @@ const recordAudio = () =>
     resolve({ start, stop });
   });
 
-const MicRecorder = ({ handleTranscribeAudio, setMicWaveVisible }) => {
+const MicRecorder = ({ handleTranscribeAudio, setMicWaveVisible, isProcessing }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingInstance, setRecordingInstance] = useState(null);
 
   const startRecording = async () => {
-    if (!isRecording) {
+    if (!isRecording && !isProcessing) {
       const recording = await recordAudio();
       setRecordingInstance(recording);
       setIsRecording(true);
@@ -54,14 +56,15 @@ const MicRecorder = ({ handleTranscribeAudio, setMicWaveVisible }) => {
       className={isRecording ? "recording" : ""}
       onClick={isRecording ? stopRecording : startRecording}
     >
-      <img
-        id="record"
-        src="https://assets.codepen.io/3537853/record.svg"
-        alt="Record"
-      />
+      {isRecording ? (
+        <IoMdSend style={{ fontSize: "1.5rem", color: "white" }} /> // Show send icon during recording
+      ) : (
+        <FaMicrophone style={{ fontSize: "1.5rem", color: "white" }} /> // Show mic icon initially
+      )}
     </div>
   );
 };
 
 export default MicRecorder;
+
 

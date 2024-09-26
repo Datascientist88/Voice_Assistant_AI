@@ -81,6 +81,13 @@ button:active, #recorder:active {
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.2);  /* Pressed effect */
 }
 
+/* Disabled state for buttons */
+button:disabled, #recorder.disabled {
+  background-color: cyan;  /* Cyan background when disabled */
+  cursor: not-allowed;  /* Show disabled cursor */
+  opacity: 0.5;  /* Reduce opacity to show it's disabled */
+  pointer-events: none; /* Prevent click events */
+}
 
 /* Media query for tablets (max-width: 768px) */
 @media (max-width: 768px) {
@@ -131,6 +138,8 @@ button:active, #recorder:active {
     height: 18px;
   }
 }
+
+
 
 
 
