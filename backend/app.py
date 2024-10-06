@@ -54,7 +54,7 @@ vector_store = get_vector_store()
 
 # RAG Chain
 def get_context_retriever_chain(vector_store=vector_store):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model='gpt-4o')
     retriever = vector_store.as_retriever()
     prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
@@ -65,7 +65,7 @@ def get_context_retriever_chain(vector_store=vector_store):
     return retriever_chain
 
 def get_conversational_rag_chain(retriever_chain):
-    llm = ChatOpenAI()
+    llm = ChatOpenAI(model='gpt-4o')
     prompt = ChatPromptTemplate.from_messages([
         ("system", AI_prompt),
         MessagesPlaceholder(variable_name="chat_history"),
@@ -122,7 +122,6 @@ def text_to_speech_file(text: str) -> str:
     except Exception as e:
         logging.error(f"Error during text-to-speech conversion: {e}")
         raise ValueError(f"Failed to generate speech audio: {e}")
-
 # Transcription Endpoint for Audio Files
 @app.route("/transcribe", methods=["POST"])
 def transcribe():
