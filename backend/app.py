@@ -22,7 +22,7 @@ load_dotenv()
 
 app = Flask(__name__)
 # Allow CORS requests from frontend (localhost:3000)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "https://patientvoiceassistant.onrender.com"}})
 
 # Initialize logging for debugging
 logging.basicConfig(level=logging.DEBUG)
