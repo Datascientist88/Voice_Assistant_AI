@@ -1,4 +1,3 @@
-/* Container for the entire JarvisInput component */
 .jarvis-container {
   display: flex;
   flex-direction: column;
@@ -8,19 +7,8 @@
   background: #000;  /* Set the overall background to black */
   color: white;
   position: relative;
-  overflow: hidden;  /* Prevent content from overflowing */
 }
 
-/* Orb container for processing visuals */
-.orb-container {
-  flex-grow: 1; /* Ensure the orb takes up remaining space */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* Visualizer for AI responses */
 .visualizer {
   width: 200px;
   height: 200px;
@@ -29,7 +17,6 @@
   margin-bottom: 20px;
 }
 
-/* Input container for the text field and buttons */
 .input-container {
   display: flex;
   align-items: center;
@@ -149,11 +136,6 @@ button:disabled, #recorder.disabled {
     font-size: 1rem;  /* Further reduce icon size for mobile */
     width: 18px; /* Adjust icon size for mobile */
     height: 18px;
-  }
-
-  /* Ensure the MicWave stays above the keyboard input on mobile */
-  .MicWcontainer {
-    bottom: 150px; /* Push the MicWave above the input on smaller screens */
   }
 }
 
