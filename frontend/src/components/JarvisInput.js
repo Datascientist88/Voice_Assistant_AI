@@ -15,7 +15,6 @@ const JarvisInput = () => {
   const [audioResponseUrl, setAudioResponseUrl] = useState(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [micWaveVisible, setMicWaveVisible] = useState(false);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // State to track keyboard visibility
 
   // Handle text input changes
   const handleInputChange = (e) => {
@@ -91,34 +90,12 @@ const JarvisInput = () => {
     }
   }, [audioResponseUrl]);
 
-  // Keyboard detection
-  useEffect(() => {
-    const handleKeyboardShow = () => setIsKeyboardVisible(true);
-    const handleKeyboardHide = () => setIsKeyboardVisible(false);
-
-    const handleResize = () => {
-      const isKeyboardVisible =
-        window.innerHeight < document.documentElement.clientHeight;
-      if (isKeyboardVisible) {
-        handleKeyboardShow();
-      } else {
-        handleKeyboardHide();
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup listener on component unmount
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <div className="jarvis-container">
+    <div className="container">
       <div className="orb-container">
         {isProcessing ? <Orb /> : isCustomOrbVisible ? <CustomOrb /> : null}
       </div>
 
-      {/* MicWave is positioned above the input */}
       {micWaveVisible && <MicWave isRecording={micWaveVisible} />}
       {isAudioPlaying && (
         <AudioWave audioUrl={audioResponseUrl} onEnded={handleAudioEnd} />
@@ -126,12 +103,7 @@ const JarvisInput = () => {
 
       <p>Ask me anything</p>
 
-      {/* Adjust input container for keyboard visibility */}
-      <div
-        className={`input-container ${
-          isKeyboardVisible ? "keyboard-visible" : ""
-        }`}
-      >
+      <div className="input-container">
         <input
           type="text"
           placeholder="type here..."
@@ -164,7 +136,6 @@ const JarvisInput = () => {
 };
 
 export default JarvisInput;
-
 
 
 
