@@ -27,11 +27,11 @@ const JarvisInput = () => {
       setIsProcessing(true);
       setIsCustomOrbVisible(false);
 
-      const response = await axios.post("http://localhost:5000/generate", {
+      const response = await axios.post("https://endpointvoice-assistant-ai.onrender.com/generate", {
         input: text,
       });
 
-      const fileUrl = `http://localhost:5000/audio/${response.data.audio_file}`;
+      const fileUrl = `https://endpointvoice-assistant-ai.onrender.com/audio/${response.data.audio_file}`;
       setAudioResponseUrl(fileUrl); // Set the AI-generated audio URL
       setIsAudioPlaying(true); // Mark AI response as playing
     } catch (error) {
@@ -53,7 +53,7 @@ const JarvisInput = () => {
       formData.append("audio", audioBlob, "audio-recording.wav");
 
       const transcribeResponse = await axios.post(
-        "http://localhost:5000/transcribe",
+        "https://endpointvoice-assistant-ai.onrender.com/transcribe",
         formData,
         {
           headers: {
