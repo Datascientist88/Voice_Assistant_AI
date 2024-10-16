@@ -1,15 +1,24 @@
-.MicWcontainer{
-     display: inline-block;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     max-width: 80%;
-     margin: 0 auto;
-}
-#waveCanvas{
+/* MicWave container to appear above the input */
+.MicWcontainer {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-
+  max-width: 80%;
+  margin: 0 auto;
+  position: absolute; /* Absolute positioning to stay above input */
+  bottom: 100px; /* Ensure it's above the input container */
 }
 
+#waveCanvas {
+  width: 100%;
+}
+
+@media (max-width: 480px){
+  /* Ensure the MicWave stays above the keyboard input on mobile */
+  .MicWcontainer {
+    bottom: 150px; /* Push the MicWave above the input on smaller screens */
+  }
+}
    
    
