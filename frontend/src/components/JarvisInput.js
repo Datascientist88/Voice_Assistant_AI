@@ -16,12 +16,10 @@ const JarvisInput = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [micWaveVisible, setMicWaveVisible] = useState(false);
 
-  // Handle text input changes
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  // Generate response (text or transcribed audio)
   const handleGenerateResponse = async (text) => {
     try {
       setIsProcessing(true);
@@ -32,18 +30,16 @@ const JarvisInput = () => {
       });
 
       const fileUrl = `https://endpointvoice-assistant-ai.onrender.com/audio/${response.data.audio_file}`;
-      setAudioResponseUrl(fileUrl); // Set the AI-generated audio URL
-      setIsAudioPlaying(true); // Mark AI response as playing
+      setAudioResponseUrl(fileUrl);
     } catch (error) {
       console.error("Error generating response:", error);
       alert("Failed to generate response.");
     } finally {
       setIsProcessing(false);
-      setIsCustomOrbVisible(true); // Restore CustomOrb after processing
+      setIsCustomOrbVisible(true);
     }
   };
 
-  // Transcribe audio and generate response
   const handleTranscribeAudio = async (audioBlob) => {
     try {
       setIsProcessing(true);
@@ -53,7 +49,7 @@ const JarvisInput = () => {
       formData.append("audio", audioBlob, "audio-recording.wav");
 
       const transcribeResponse = await axios.post(
-        "https://endpointvoice-assistant-ai.onrender.com/transcribe",
+       "https://endpointvoice-assistant-ai.onrender.com/transcribe",
         formData,
         {
           headers: {
@@ -69,24 +65,19 @@ const JarvisInput = () => {
       alert("Failed to transcribe audio.");
     } finally {
       setIsProcessing(false);
-      setMicWaveVisible(false); // Hide micwave after recording ends
+      setMicWaveVisible(false);
     }
   };
 
-  // Handle playing the AI response audio
-  const handleAudioPlay = () => {
-    setIsAudioPlaying(true);
-  };
-
   const handleAudioEnd = () => {
-    setIsAudioPlaying(false); // Hide AudioWave after the audio finishes
-    setAudioResponseUrl(null); // Reset the audio URL
+    setIsAudioPlaying(false);
+    setAudioResponseUrl(null);
   };
 
-  // Auto-play the AI response audio when available
   useEffect(() => {
     if (audioResponseUrl) {
-      handleAudioPlay();
+      // Set audio playing state only for UI feedback; playback should be user-triggered
+      setIsAudioPlaying(true);
     }
   }, [audioResponseUrl]);
 
@@ -112,7 +103,6 @@ const JarvisInput = () => {
           disabled={isProcessing || isAudioPlaying}
         />
 
-        {/* Toggle between MicRecorder and Send button */}
         {!inputValue ? (
           <MicRecorder
             handleTranscribeAudio={handleTranscribeAudio}
@@ -123,7 +113,7 @@ const JarvisInput = () => {
           <button
             onClick={async () => {
               await handleGenerateResponse(inputValue);
-              setInputValue(""); // Clear input after sending
+              setInputValue("");
             }}
             disabled={isProcessing || isAudioPlaying}
           >
@@ -131,6 +121,12 @@ const JarvisInput = () => {
           </button>
         )}
       </div>
+
+      {audioResponseUrl && (
+        <button onClick={() => new Audio(audioResponseUrl).play()}>
+          Play Response
+        </button>
+      )}
     </div>
   );
 };
