@@ -32,7 +32,7 @@ const Chat = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post("http://127.0.0.1:5000/generate", {
+        const response = await axios.post("https://endpointvoice-assistant-ai.onrender.com/generate", {
           input: data.text,
         });
 
