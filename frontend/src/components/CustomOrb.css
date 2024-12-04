@@ -1,4 +1,4 @@
-body, html {
+body {
      height: 100%;
      display: flex;
      flex-direction: column; /* Allows title at the top */
@@ -11,11 +11,7 @@ body, html {
    
    canvas {
      position: relative;
-     width: 60vmin; /* Adjust size */
-     height: 60vmin; /* Adjust size */
-     max-width: 400px; /* Maximum size */
-     max-height: 400px;
-     background: none; /* Make sure canvas background is transparent */
+     background: none;
    }
    
    /* Media query for small screens */
