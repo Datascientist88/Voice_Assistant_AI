@@ -4,7 +4,8 @@ body, html {
      flex-direction: column; /* Allows title at the top */
      align-items: center; /* Centers horizontally */
      justify-content: center; /* Centers vertically */
-     background: black;
+    background-image:url("https://i.ibb.co/tMnT3Lz/bgimage.jpg");
+    background-size: cover;
      overflow: hidden;
    }
    

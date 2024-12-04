@@ -1,0 +1,109 @@
+/* Chat container styles with glassmorphic effect */
+.chat-container {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphic effect */
+    border-radius: 30px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+    width: 27%;
+    position: fixed; /* Ensure it's fixed at the bottom */
+    bottom: 10px;
+    left:82%;
+    transform: translateX(-38%);
+    border: none; /* Remove white border */
+}
+
+/* Style for the expanding multi-line textarea with glass effect */
+.chat-input {
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 8px;
+    margin-right: 8px;
+    outline: none;
+    font-size: 15px;
+    color: black;
+    flex-grow: 2;
+    box-shadow: inset 5px 4px 10px rgba(0, 0, 0, 0.1);
+    resize: none; /* Disable manual resizing */
+    overflow: hidden; /* Smooth height adjustment */
+    line-height: 1.4;
+    min-height:38px;
+    max-height: 120px; /* Minimum height */
+    transition: height 0.2s ease; /* Smooth transition */
+}
+
+.chat-input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Button styles with gradient and shadow effects */
+.icon-btn {
+    background: linear-gradient(145deg, #00B0F0, #00D4FF);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+/* Button hover and active effects */
+.icon-btn:hover {
+    background: linear-gradient(145deg, #ff66b2, #eb0451);
+    box-shadow: 0 8px 20px rgba(255, 102, 178, 0.4);
+}
+
+.icon-btn:active {
+    transform: scale(1.1);
+}
+
+/* Remove black border when button is clicked */
+.icon-btn:focus {
+    outline: none;
+    border: none;
+}
+/* Media Queries */
+@media (max-width: 768px) {
+    .chat-container {
+        max-width: 20%;
+        padding: 8px;
+    }
+
+    .chat-input {
+        font-size: 14px;
+    }
+
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-container {
+        max-width: 70%;
+        padding: 5px;
+    }
+
+    .chat-input {
+        font-size: 12px;
+    }
+
+    .icon-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}
