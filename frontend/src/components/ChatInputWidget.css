@@ -60,7 +60,7 @@
 
 /* Button hover and active effects */
 .icon-btn:hover {
-    background: linear-gradient(145deg, #ff66b2, #eb0451);
+    background: #ac02b8;
     box-shadow: 0 8px 20px rgba(255, 102, 178, 0.4);
 }
 
