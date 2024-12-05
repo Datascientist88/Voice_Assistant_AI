@@ -109,23 +109,32 @@
   }
   
   .chat-message.bot {
-    align-content: flex-start !important;
     margin-left: 0.05rem;
     margin-right: 5rem;
+    justify-content: flex-start;
   }
   
   .chat-message.me {
     justify-content: flex-end;
   }
-  
+  [lang="ar"]{
+    direction: rtl;
+    text-align: right;
+  }
+  [lang="en"]{
+    direction: ltr;
+    text-align: left;
+
+  }
   /* Chat Message Text */
   .message-text {
+    display: inline-block;
     max-width: 70%;
     padding: 0.8rem;
     border-radius: 12px;
     font-size: 1rem;
     line-height: 1.4;
-    word-wrap: break-word;
+    text-align: justify;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
   }
@@ -140,13 +149,6 @@
     background: linear-gradient(120deg, #248a52, #257287);
     color: #fff;
     border-radius: 10px 10px 0 10px;
-  }
-  
-  /* Chat Timestamp */
-  .chat-time {
-    font-size: 0.8rem;
-    color: #777;
-    margin-left: 10px;
   }
   
   /* Avatar Styling */
@@ -170,7 +172,7 @@
   
   .chat-message:hover .avatar {
     transform: scale(1.5);
-    margin-right: 40px;
+    margin-right: 20px;
     border-radius: 50%;
   }
   
