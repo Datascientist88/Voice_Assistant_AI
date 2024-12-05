@@ -93,7 +93,7 @@ const Chat = () => {
               {chat.who === "bot" && (
                 <figure className="avatar">
                   <img
-                    src="https://i.ibb.co/bXnQgZg/BG-image.png"
+                    src="./bubbles.gif"
                     alt="avatar"
                   />
                 </figure>
@@ -106,7 +106,7 @@ const Chat = () => {
             <div className="chat-message loading">
               <figure className="avatar">
                 <img
-                  src="https://i.ibb.co/bXnQgZg/BG-image.png"
+                  src="./bubbles.gif"
                   alt="avatar"
                 />
               </figure>

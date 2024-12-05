@@ -50,11 +50,18 @@ const AudioVisualizer = () => {
       let x = 0;
       for (let i = 0; i < bufferLength; i++) {
         const barHeight = dataArray[i];
-        const r = barHeight + 25 * (i / bufferLength);
-        const g = 250 * (i / bufferLength);
-        const b = 50;
 
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        // Create a linear gradient for each bar
+        const gradient = ctx.createLinearGradient(
+          x,
+          HEIGHT - barHeight,
+          x,
+          HEIGHT
+        );
+        gradient.addColorStop(0, "violet"); // Start color
+        gradient.addColorStop(1, "pink");  // End color
+
+        ctx.fillStyle = gradient;
         ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
