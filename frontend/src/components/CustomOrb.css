@@ -1,34 +1,12 @@
-body {
-     height: 100%;
-     display: flex;
-     flex-direction: column; /* Allows title at the top */
-     align-items: center; /* Centers horizontally */
-     justify-content: center; /* Centers vertically */
-    background-image:url("https://i.ibb.co/tMnT3Lz/bgimage.jpg");
-    background-size: cover;
-     overflow: hidden;
-   }
-   
-   canvas {
-     position: relative;
+   .customOrb {
      background: none;
+     position:absolute;
+     margin-left: 35%;
+     min-width: 100vw;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     
    }
-   
-   /* Media query for small screens */
-   @media (max-width: 768px) {
-     canvas {
-       width: 80vmin; /* Make the orb larger on mobile devices */
-       height: 80vmin;
-     }
-   }
-   
-   @media (max-width: 480px) {
-     canvas {
-       width: 90vmin; /* Make the orb take more space on small screens */
-       height: 90vmin;
-     }
-   }
-   
-   
    
    

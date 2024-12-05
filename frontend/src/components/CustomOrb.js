@@ -3,10 +3,10 @@ import { Player } from '@lottiefiles/react-lottie-player'; // Import Lottie Play
 
 const CustomOrb = () => {
   return (
-    <div
+    <div className='customOrb'
       style={{
-        width: '450px',
-        height: '450px',
+        width: '400px',
+        height: '400px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

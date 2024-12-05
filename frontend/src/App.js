@@ -1,7 +1,3 @@
-// src/App.js
-// src/App.js
-// src/App.js
-
 import React, { useEffect } from 'react';
 import JarvisInput from './components/JarvisInput';
 import Title from './components/Title';

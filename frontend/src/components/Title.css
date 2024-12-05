@@ -1,21 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Protest+Guerrilla&display=swap');
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Title stays at the top */
-    height: 100vh;
-  }
   
   :root {
     --base-color: cyan;
   }
   
   .title{
+    min-height: 100vh;
+    display: flex;
+    position: absolute;
     font-size:5.5rem;
-    margin-top:45vh;
     color:white;
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
