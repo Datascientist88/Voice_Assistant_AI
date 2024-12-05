@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ChatInputWidget from "./ChatInputWidget";
+import useAudioStore from "./store/audioStore";
 import "./Chat.css";
 
 const Chat = () => {
@@ -10,6 +11,8 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(false);
   const chatContentRef = useRef(null);
+
+  const { setAudioUrl } = useAudioStore();
 
   const scrollToBottom = () => {
     if (chatContentRef.current) {
@@ -32,17 +35,24 @@ const Chat = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post("https://endpointvoice-assistant-ai.onrender.com/generate", {
+        const response = await axios.post("http://localhost:5000/generate", {
           input: data.text,
         });
 
-        const { text: botResponse } = response.data;
+        const { response: botResponse, audio } = response.data;
 
         // Update chat with bot response
         setChats((prevChats) => [
           ...prevChats,
           { msg: botResponse, who: "bot" },
         ]);
+
+        // Pass audio to Zustand store for playback
+        if (audio) {
+          const audioBlob = base64ToBlob(audio, "audio/mp3");
+          const audioUrl = URL.createObjectURL(audioBlob);
+          setAudioUrl(audioUrl);
+        }
       } catch (error) {
         console.error("Error fetching response from /generate:", error);
         setChats((prevChats) => [
@@ -60,6 +70,18 @@ const Chat = () => {
 
   const toggleChatVisibility = () => {
     setIsChatVisible((prevState) => !prevState);
+  };
+
+  const base64ToBlob = (base64, mimeType) => {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length).fill().map((_, i) => slice.charCodeAt(i));
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: mimeType });
   };
 
   return (
@@ -92,8 +114,8 @@ const Chat = () => {
                 style={{ padding: "5px", display: "flex", alignItems: "center" }}
               >
                 <lottie-player
-                  src="https://lottie.host/d354a5c5-9a8b-456f-a7ed-e88fd09ce683/vYJTHMVdFJ.json"
-                  style={{ width: "60px", height: "60px" }}
+                  src="https://lottie.host/47000d95-a3cd-43b8-ba63-fc7b3216f1cf/6gPsoPB6JM.json"
+                  style={{ width: "130px", height: "130px" }}
                   loop
                   autoplay
                   speed="1"
@@ -116,3 +138,6 @@ const Chat = () => {
 };
 
 export default Chat;
+
+
+
