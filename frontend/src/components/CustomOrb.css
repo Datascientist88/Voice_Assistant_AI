@@ -1,12 +1,30 @@
-   .customOrb {
-     background: none;
-     position:absolute;
-     margin-left: 35%;
-     min-width: 100vw;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     
-   }
+/* Custom Orb Styling */
+.customOrb {
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 400px; /* Default size for desktop */
+  height: 400px; /* Default size for desktop */
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) { /* Tablet */
+  .customOrb {
+    width: 250px; /* Smaller size for tablets */
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) { /* Mobile */
+  .customOrb {
+    width: 150px; /* Smaller size for mobile */
+    height: 150px;
+  }
+}
+
    
    

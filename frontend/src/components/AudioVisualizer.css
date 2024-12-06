@@ -1,18 +1,35 @@
 .audio-visualizer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Default size for desktop */
+  height: 400px; /* Default size for desktop */
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2); /* Glassmorphic effect */
+  backdrop-filter: blur(15px); /* Blur effect */
+  -webkit-backdrop-filter: blur(15px); /* Safari support */
+}
+
+canvas {
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) { /* Tablet */
+  .audio-visualizer {
+    width: 250px; /* Smaller size for tablets */
+    height: 250px;
   }
-  canvas {
-    border-radius: 50%;
-    background-color: rgb(255, 255, 255);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-   
+}
+
+@media (max-width: 480px) { /* Mobile */
+  .audio-visualizer {
+    width: 150px; /* Smaller size for mobile */
+    height: 150px;
   }
-  
+}

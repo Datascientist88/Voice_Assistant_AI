@@ -76,7 +76,8 @@
 /* Media Queries */
 @media (max-width: 768px) {
     .chat-container {
-        max-width: 20%;
+        width: 50%;
+        margin-left: 5%;
         padding: 8px;
     }
 
@@ -93,8 +94,11 @@
 
 @media (max-width: 480px) {
     .chat-container {
-        max-width: 70%;
+        min-width: 60%;
+        width: 80%;
         padding: 5px;
+        left: 40%;
+       
     }
 
     .chat-input {
