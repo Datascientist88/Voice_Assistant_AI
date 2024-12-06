@@ -20,7 +20,8 @@ load_dotenv()
 
 # Initialize Flask App
 app = Flask(__name__)
-CORS(app, origins=["https://usmle-conversationalassistant.onrender.com"])  # Allow CORS for specific origin
+CORS(app, resources={r"/*": {"origins": "https://usmle-examassistant.onrender.com"}})
+  # Allow CORS for specific origin
 
 # Initialize ElevenLabs client
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
