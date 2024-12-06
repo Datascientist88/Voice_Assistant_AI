@@ -35,7 +35,7 @@ const Chat = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post("http://localhost:5000/generate", {
+        const response = await axios.post("https://voice-assistant-ai-3bis.onrender.com/generate", {
           input: data.text,
         });
 
