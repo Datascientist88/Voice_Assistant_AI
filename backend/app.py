@@ -12,8 +12,8 @@ from Template.promptAI import AI_prompt
 from elevenlabs import ElevenLabs
 import base64
 import os
-import asyncio
 import orjson
+import logging
 
 # Load environment variables
 load_dotenv()
@@ -21,7 +21,9 @@ load_dotenv()
 # Initialize Flask App
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://usmle-conversationalassistant.onrender.com"}})
-  # Allow CORS for specific origin
+
+# Initialize logger
+logging.basicConfig(level=logging.INFO)
 
 # Initialize ElevenLabs client
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
@@ -85,21 +87,24 @@ def jsonify_fast(data):
 
 # Generate endpoint
 @app.route('/generate', methods=['POST'])
-async def generate():
+def generate():
     try:
         user_input = request.json.get('input')
+        app.logger.info(f"User input: {user_input}")
+        
+        # Update chat history
         chat_history.append(HumanMessage(content=user_input))
 
-        # Generate response
-        response = await asyncio.to_thread(conversation_rag_chain.invoke, {
+        # Generate response synchronously
+        response = conversation_rag_chain.invoke({
             "chat_history": chat_history,
             "input": user_input,
         })
         response_content = response.get("answer", "")
         chat_history.append(AIMessage(content=response_content))
 
-        # Generate audio using ElevenLabs
-        audio_base64 = await asyncio.to_thread(text_to_speech_base64, response_content)
+        # Generate audio
+        audio_base64 = text_to_speech_base64(response_content)
 
         # Return response and audio
         return jsonify_fast({
@@ -110,9 +115,10 @@ async def generate():
         app.logger.error(f"Error in /generate endpoint: {e}")
         return jsonify({"error": str(e)}), 500
 
-# Run Flask App
+# Run Flask App with hypercorn or similar
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
+
 
 
 

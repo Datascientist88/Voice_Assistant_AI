@@ -4,6 +4,7 @@ langchain_core
 langchain_openai
 python-dotenv
 flask
+Flask[async]
 flask_cors
 tiktoken
 qdrant-client
