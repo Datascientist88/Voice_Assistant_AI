@@ -35,7 +35,7 @@ const Chat = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post("https://voiceassistantflaskbackend.onrender.com/generate", {
+        const response = await axios.post("https://private-backend-repo.onrender.com/generate", {
           input: data.text,
         });
 
