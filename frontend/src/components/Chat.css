@@ -207,16 +207,28 @@
 /* Media Queries for Small Devices */
 @media screen and (max-width: 768px) {
   .chat-content {
+    padding: 0.5rem;
+    padding-bottom: 5rem;
     width: 100%;
-    right: 0;
-    border-radius: 0;
-    z-index: 100;
   }
 
   .chat-footer {
+    padding: 0.5rem;
     width: 100%;
-    border-radius: 0;
-    z-index: 101;
+  }
+
+  .message-text {
+    font-size: 0.9rem;
+  }
+
+  .toggle-button {
+    right: 10%;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
   }
 }
 
@@ -233,9 +245,16 @@
   }
 
   .message-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
-  .toggle-button{
-    right: 90%;
+
+  .toggle-button {
+    right: 10%;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 }
